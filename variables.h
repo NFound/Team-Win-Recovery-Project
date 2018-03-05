@@ -17,7 +17,7 @@
 #ifndef _VARIABLES_HEADER_
 #define _VARIABLES_HEADER_
 
-#define TW_MAIN_VERSION_STR       "3.2.0"
+#define TW_MAIN_VERSION_STR       "3.2.1"
 #define TW_VERSION_STR TW_MAIN_VERSION_STR TW_DEVICE_VERSION
 
 #define TW_USE_COMPRESSION_VAR      "tw_use_compression"
@@ -96,6 +96,8 @@
 #define TW_REBOOT_RECOVERY          "tw_reboot_recovery"
 #define TW_REBOOT_POWEROFF          "tw_reboot_poweroff"
 #define TW_REBOOT_BOOTLOADER        "tw_reboot_bootloader"
+#define TW_REBOOT_EDL               "tw_reboot_edl"
+#define TW_REBOOT_DISEMMCWP         "tw_reboot_disemmcwp"
 
 #define TW_USE_EXTERNAL_STORAGE     "tw_use_external_storage"
 #define TW_HAS_INTERNAL             "tw_has_internal"
@@ -139,6 +141,13 @@
 #define TW_MILITARY_TIME            "tw_military_time"
 #define TW_USE_SHA2                 "tw_use_sha2"
 #define TW_NO_SHA2                  "tw_no_sha2"
+
+// Xposed
+#define TW_XPOSED                 "tw_xposed"
+#define TW_XPOSED_ENABLED         "tw_xposed_enabled"
+#define XPOSED_DATA_DIR           "/data/user_de/0/de.robv.android.xposed.installer"
+#define XPOSED_CONF_DIR           "/data/user_de/0/de.robv.android.xposed.installer/conf"
+#define XPOSED_DISABLE_FILE       "/data/user_de/0/de.robv.android.xposed.installer/conf/disabled"
 
 // Also used:
 //   tw_boot_is_mountable

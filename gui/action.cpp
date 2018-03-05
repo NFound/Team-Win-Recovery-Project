@@ -186,6 +186,7 @@ GUIAction::GUIAction(xml_node<>* node)
 		ADD_ACTION(getpartitiondetails);
 		ADD_ACTION(screenshot);
 		ADD_ACTION(setbrightness);
+		ADD_ACTION(setbtnbrightness);
 		ADD_ACTION(fileexists);
 		ADD_ACTION(killterminal);
 		ADD_ACTION(checkbackupname);
@@ -197,7 +198,6 @@ GUIAction::GUIAction(xml_node<>* node)
 		ADD_ACTION(checkpartitionlifetimewrites);
 		ADD_ACTION(mountsystemtoggle);
 		ADD_ACTION(setlanguage);
-		ADD_ACTION(checkforapp);
 		ADD_ACTION(togglebacklight);
 
 		// remember actions that run in the caller thread
@@ -210,6 +210,18 @@ GUIAction::GUIAction(xml_node<>* node)
 		ADD_ACTION(refreshsizes);
 		ADD_ACTION(nandroid);
 		ADD_ACTION(fixcontexts);
+		ADD_ACTION(resetlockscreen);
+		ADD_ACTION(resetbattery);
+		ADD_ACTION(resetvk);
+		ADD_ACTION(resetdm);
+		ADD_ACTION(resetaboot);
+		ADD_ACTION(resettorch);
+		ADD_ACTION(resettorch2);
+		ADD_ACTION(fdata);
+		ADD_ACTION(resetunroot);
+		ADD_ACTION(rebootedl);
+		ADD_ACTION(rebootdise);
+		ADD_ACTION(xposed);
 		ADD_ACTION(fixpermissions);
 		ADD_ACTION(dd);
 		ADD_ACTION(partitionsd);
@@ -230,7 +242,6 @@ GUIAction::GUIAction(xml_node<>* node)
 		ADD_ACTION(flashimage);
 		ADD_ACTION(twcmd);
 		ADD_ACTION(setbootslot);
-		ADD_ACTION(installapp);
 	}
 
 	// First, get the action
@@ -981,6 +992,11 @@ int GUIAction::setbrightness(std::string arg)
 	return TWFunc::Set_Brightness(arg);
 }
 
+int GUIAction::setbtnbrightness(std::string arg)
+{
+	return TWFunc::Set_Btn_Brightness(arg);
+}
+
 int GUIAction::fileexists(std::string arg)
 {
 	struct stat st;
@@ -1268,6 +1284,235 @@ int GUIAction::fixcontexts(std::string arg __unused)
 	}
 	operation_end(op_status);
 	return 0;
+}
+
+int GUIAction::resetlockscreen(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("Reset Lockscreen");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "rm -f data/system/*.key data/system/locksettings.*";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset lockscreen: Removing lockscreen password/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset lockscreen: Removing lockscreen password/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::resetbattery(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("Reset Battery");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "rm -f data/system/batterystats.bin";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset battery: Removing battery/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset battery: Removing battery/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::resetvk(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("Reset vk");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "rm -f data/data/com.vkontakte.android/shared_prefs/PlayerService.xml";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset vk: Removing vk/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset vk: Removing vk/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::resetdm(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("No dm-verity");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "sh /nov/start.sh";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset dm: Removing dm/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset dm: Removing dm/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::resetaboot(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("Delete inscription");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "dd if=/sbin/aboot of=/dev/block/bootdevice/by-name/aboot";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset aboot: Removing in/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset aboot: Removing in/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::resettorch(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("torch");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "echo 100 > /sys/class/leds/led:torch_0/brightness && echo 100 > /sys/class/leds/led:torch_1/brightness";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset torch: Removing in/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset torch: Removing in/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::resettorch2(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("torch2");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "echo 0 > /sys/class/leds/led:torch_0/brightness && echo 0 > /sys/class/leds/led:torch_1/brightness";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset torch2: Removing in/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset torch2: Removing in/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::fdata(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("fdata");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "make_ext4fs /dev/block/bootdevice/by-name/data";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset fdata: Removing in/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset fdata: Removing in/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::resetunroot(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("unroot");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "sh /sbin/ss.sh";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset unroot: Removing dm/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset unroot: Removing dm/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::rebootedl(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("Reboot edl");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "reboot edl";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset aboot: Reboot edl/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset aboot: Reboot edl/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::rebootdise(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("Reboot dise");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+		string cmd = "reboot disemmcwp";
+		op_status = TWFunc::Exec_Cmd(cmd);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("reset aboot: Reboot dise/pattern... Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("reset aboot: Reboot dise/pattern... Success: result=%d\n", op_status);
+	return op_status;
+}
+
+int GUIAction::xposed(std::string arg __unused)
+{
+	int op_status = 0;
+
+	operation_start("Xposed");
+	if (simulate) {
+		simulate_progress_bar();
+	} else {
+	        int value;
+	        DataManager::GetValue(TW_XPOSED_ENABLED, value);
+		op_status = TWFunc::Set_Xposed_Enabled(value != 1);
+	}
+	operation_end(op_status);
+	if (op_status != 0)
+	       LOGINFO("Xposed action Failed:  result=%d\n", op_status);
+	else
+	       LOGINFO("Xposed action Success: result=%d\n", op_status);
+	return op_status;
 }
 
 int GUIAction::fixpermissions(std::string arg)
@@ -1867,12 +2112,18 @@ int GUIAction::setlanguage(std::string arg __unused)
 {
 	int op_status = 0;
 
+    DataManager::Flush();
+
 	operation_start("Set Language");
 	PageManager::LoadLanguage(DataManager::GetStrValue("tw_language"));
 	PageManager::RequestReload();
 	op_status = 0; // success
 
 	operation_end(op_status);
+	DataManager::ReadSettingsFile();
+	if(DataManager::GetIntValue("tw_disable_navbar")){
+		PageManager::NotifyVarChange("tw_disable_navbar", "1");
+	}
 	return 0;
 }
 
@@ -1889,163 +2140,6 @@ int GUIAction::setbootslot(std::string arg)
 		PartitionManager.Set_Active_Slot(arg);
 	else
 		simulate_progress_bar();
-	operation_end(0);
-	return 0;
-}
-
-int GUIAction::checkforapp(std::string arg __unused)
-{
-	operation_start("Check for TWRP App");
-	if (!simulate)
-	{
-		string sdkverstr = TWFunc::System_Property_Get("ro.build.version.sdk");
-		int sdkver = 0;
-		if (!sdkverstr.empty()) {
-			sdkver = atoi(sdkverstr.c_str());
-		}
-		if (sdkver <= 13) {
-			if (sdkver == 0)
-				LOGINFO("Unable to read sdk version from build prop\n");
-			else
-				LOGINFO("SDK version too low for TWRP app (%i < 14)\n", sdkver);
-			DataManager::SetValue("tw_app_install_status", 1); // 0 = no status, 1 = not installed, 2 = already installed or do not install
-			goto exit;
-		}
-		if (PartitionManager.Mount_By_Path("/system", false)) {
-			string base_path = "/system";
-			if (TWFunc::Path_Exists("/system/system"))
-				base_path += "/system"; // For devices with system as a root file system (e.g. Pixel)
-			string install_path = base_path + "/priv-app";
-			if (!TWFunc::Path_Exists(install_path))
-				install_path = base_path + "/app";
-			install_path += "/twrpapp";
-			if (TWFunc::Path_Exists(install_path)) {
-				LOGINFO("App found at '%s'\n", install_path.c_str());
-				DataManager::SetValue("tw_app_install_status", 2); // 0 = no status, 1 = not installed, 2 = already installed or do not install
-				goto exit;
-			}
-		}
-		if (PartitionManager.Mount_By_Path("/data", false)) {
-			const char parent_path[] = "/data/app";
-			const char app_prefix[] = "me.twrp.twrpapp-";
-			DIR *d = opendir(parent_path);
-			if (d) {
-				struct dirent *p;
-				while ((p = readdir(d))) {
-					if (p->d_type != DT_DIR || strlen(p->d_name) < strlen(app_prefix) || strncmp(p->d_name, app_prefix, strlen(app_prefix)))
-						continue;
-					closedir(d);
-					LOGINFO("App found at '%s/%s'\n", parent_path, p->d_name);
-					DataManager::SetValue("tw_app_install_status", 2); // 0 = no status, 1 = not installed, 2 = already installed or do not install
-					goto exit;
-				}
-				closedir(d);
-			}
-		} else {
-			LOGINFO("Data partition cannot be mounted during app check\n");
-			DataManager::SetValue("tw_app_install_status", 2); // 0 = no status, 1 = not installed, 2 = already installed or do not install
-		}
-	} else
-		simulate_progress_bar();
-	LOGINFO("App not installed\n");
-	DataManager::SetValue("tw_app_install_status", 1); // 0 = no status, 1 = not installed, 2 = already installed
-exit:
-	operation_end(0);
-	return 0;
-}
-
-int GUIAction::installapp(std::string arg __unused)
-{
-	int op_status = 1;
-	operation_start("Install TWRP App");
-	if (!simulate)
-	{
-		if (DataManager::GetIntValue("tw_mount_system_ro") > 0 || DataManager::GetIntValue("tw_app_install_system") == 0) {
-			if (PartitionManager.Mount_By_Path("/data", true)) {
-				string install_path = "/data/app";
-				string context = "u:object_r:apk_data_file:s0";
-				if (!TWFunc::Path_Exists(install_path)) {
-					if (mkdir(install_path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) {
-						LOGERR("Error making %s directory: %s\n", install_path.c_str(), strerror(errno));
-						goto exit;
-					}
-					if (chown(install_path.c_str(), 1000, 1000)) {
-						LOGERR("chown %s error: %s\n", install_path.c_str(), strerror(errno));
-						goto exit;
-					}
-					if (setfilecon(install_path.c_str(), (security_context_t)context.c_str()) < 0) {
-						LOGERR("setfilecon %s error: %s\n", install_path.c_str(), strerror(errno));
-						goto exit;
-					}
-				}
-				install_path += "/me.twrp.twrpapp-1";
-				if (mkdir(install_path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) {
-					LOGERR("Error making %s directory: %s\n", install_path.c_str(), strerror(errno));
-					goto exit;
-				}
-				if (chown(install_path.c_str(), 1000, 1000)) {
-					LOGERR("chown %s error: %s\n", install_path.c_str(), strerror(errno));
-					goto exit;
-				}
-				if (setfilecon(install_path.c_str(), (security_context_t)context.c_str()) < 0) {
-					LOGERR("setfilecon %s error: %s\n", install_path.c_str(), strerror(errno));
-					goto exit;
-				}
-				install_path += "/base.apk";
-				if (TWFunc::copy_file("/sbin/me.twrp.twrpapp.apk", install_path, 0644)) {
-					LOGERR("Error copying apk file\n");
-					goto exit;
-				}
-				if (chown(install_path.c_str(), 1000, 1000)) {
-					LOGERR("chown %s error: %s\n", install_path.c_str(), strerror(errno));
-					goto exit;
-				}
-				if (setfilecon(install_path.c_str(), (security_context_t)context.c_str()) < 0) {
-					LOGERR("setfilecon %s error: %s\n", install_path.c_str(), strerror(errno));
-					goto exit;
-				}
-				sync();
-				sync();
-			}
-		} else {
-			if (PartitionManager.Mount_By_Path("/system", true)) {
-				string base_path = "/system";
-				if (TWFunc::Path_Exists("/system/system"))
-					base_path += "/system"; // For devices with system as a root file system (e.g. Pixel)
-				string install_path = base_path + "/priv-app";
-				string context = "u:object_r:system_file:s0";
-				if (!TWFunc::Path_Exists(install_path))
-					install_path = base_path + "/app";
-				if (TWFunc::Path_Exists(install_path)) {
-					install_path += "/twrpapp";
-					LOGINFO("Installing app to '%s'\n", install_path.c_str());
-					if (mkdir(install_path.c_str(), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == 0) {
-						if (setfilecon(install_path.c_str(), (security_context_t)context.c_str()) < 0) {
-							LOGERR("setfilecon %s error: %s\n", install_path.c_str(), strerror(errno));
-							goto exit;
-						}
-						install_path += "/me.twrp.twrpapp.apk";
-						if (TWFunc::copy_file("/sbin/me.twrp.twrpapp.apk", install_path, 0644)) {
-							LOGERR("Error copying apk file\n");
-							goto exit;
-						}
-						if (setfilecon(install_path.c_str(), (security_context_t)context.c_str()) < 0) {
-							LOGERR("setfilecon %s error: %s\n", install_path.c_str(), strerror(errno));
-							goto exit;
-						}
-						sync();
-						sync();
-						PartitionManager.UnMount_By_Path("/system", true);
-						op_status = 0;
-					} else {
-						LOGERR("Error making app directory '%s': %s\n", strerror(errno));
-					}
-				}
-			}
-		}
-	} else
-		simulate_progress_bar();
-exit:
 	operation_end(0);
 	return 0;
 }

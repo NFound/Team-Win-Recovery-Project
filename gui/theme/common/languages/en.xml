@@ -10,6 +10,22 @@
 		<resource name="font_s" type="fontoverride" filename="RobotoCondensed-Regular.ttf" scale="100" />
 		<resource name="fixed" type="fontoverride" filename="DroidSansMono.ttf" scale="100" />
 
+                <!-- v.3.1.1-3 Xposed functions strings -->
+                <string name="advanced2_btn">More...</string>
+	        <string name="xposed_dis_btn">Disable Xposed</string>
+	        <string name="xposed_en_btn">Enable Xposed</string>
+	        <string name="more_hdr">Advanced > More</string>
+	        <string name="xposed_dis_note1">If you experience bootloop after Xposed Framework</string>
+	        <string name="xposed_dis_note2">or Module install you should do this.</string>
+	        <string name="xposed_en_note1">Is your Xposed Framework or Module</string>
+	        <string name="xposed_en_note2">related bootloop issue fixed?</string>
+	        <string name="swipe_to_dis_xposed">Swipe to Disable Xposed</string>
+	        <string name="swipe_to_en_xposed">Swipe to Enable Xposed</string>
+		<string name="xposed_dis">Disabling Xposed...</string>
+		<string name="xposed_dis_complete">Xposed Disabled</string>
+		<string name="xposed_en">Enabling Xposed...</string>
+		<string name="xposed_en_complete">Xposed Enabled</string>
+
 		<!-- Partition display names -->
 		<string name="system">System</string>
 		<string name="system_image">System Image</string>
@@ -20,9 +36,9 @@
 		<string name="cache">Cache</string>
 		<string name="data">Data</string>
 		<string name="data_backup">Data (excl. storage)</string>
-		<string name="sdcard">SDCard</string>
+		<string name="sdcard">SD card</string>
 		<string name="internal">Internal Storage</string>
-		<string name="microsd">Micro SDCard</string>
+		<string name="microsd">Micro SD card</string>
 		<string name="usbotg">USB OTG</string>
 		<string name="android_secure">Android Secure</string>
 		<string name="dalvik">Dalvik / ART Cache</string>
@@ -33,7 +49,7 @@
 		<string name="autostorage">Storage</string>
 
 		<!-- GUI XML strings -->
-		<string name="twrp_header">Team Win Recovery Project</string>
+		<string name="twrp_header">TWRP Exclusive™</string>
 		<string name="twrp_watch_header">TWRP %tw_version%</string>
 		<string name="cpu_temp">CPU: %tw_cpu_temp% &#xB0;C</string>
 		<string name="battery_pct">Battery: %tw_battery%</string>
@@ -116,13 +132,6 @@
 		<string name="rebooting">Rebooting...</string>
 		<string name="swipe_reboot">Swipe to Reboot</string>
 		<string name="swipe_reboot_s">   Reboot</string>
-		<string name="reboot_install_app_hdr">Install TWRP App?</string>
-		<string name="reboot_install_app1">Would you like to install the Official TWRP App?</string>
-		<string name="reboot_install_app2">The app can check for new TWRP versions.</string>
-		<string name="reboot_install_app_prompt_install">Prompt to install TWRP app if not installed</string>
-		<string name="reboot_install_app_system">Install as a System App</string>
-		<string name="reboot_installing_app">Installing App...</string>
-		<string name="swipe_to_install_app">Swipe to Install TWRP App</string>
 		<string name="swipe_flash">Swipe to confirm Flash</string>
 		<string name="confirm_action">Confirm Action</string>
 		<string name="back_cancel">Press back button to cancel.</string>
@@ -358,13 +367,36 @@
 		<string name="curr_tz">Current Time Zone: %tw_time_zone%</string>
 		<string name="curr_tz_s">Current Time Zone:</string>
 		<string name="set_tz_btn">Set Time Zone</string>
-		<string name="settings_screen_hdr">Screen</string>
 		<string name="settings_screen_timeout_hdr">Screen Timeout</string>
 		<string name="enable_timeout_chk">Enable screen timeout</string>
 		<string name="screen_to_slider">Screen timeout in seconds:</string>
 		<string name="screen_to_slider_s">Screen timeout in seconds (0=disabled): %tw_screen_timeout_secs%</string>
 		<string name="screen_to_na">Screen timeout setting unavailable</string>
-		<string name="screen_bright_slider">Brightness: %tw_brightness_pct%%</string>
+		
+		
+		
+		
+		<string name="settings_screen_hdr">Screen and buttons</string>
+		<string name="screen_bright_slider">Screen brightness: %tw_brightness_pct%%</string>
+		<string name="buttons_bright_slider">Buttons brightness: %tw_btn_brightness_pct%%</string>
+		<string name="dis_navbar_chk">Disable navbar</string>
+		<string name="enbl_keys_chk">Enable device buttons</string>
+		
+		
+		
+		<string name="reset_lockscreen_btn">Reset Lockscreen</string>
+		<string name="reset_lockscreen_hdr">Reset Lockscreen</string>
+		<string name="reset_lockscreen_note1">If you cannot pass Lockscreen security</string>
+		<string name="reset_lockscreen_note2">after backup restore you should do this.</string>
+		<string name="swipe_to_reset_lockscreen">Swipe to Reset Lockscreen</string>
+		<string name="resetting_lockscreen">Resetting Lockscreen...</string>
+		<string name="reset_lockscreen_complete">Reset Lockscreen Complete</string>
+		
+		
+		
+		
+		
+		
 		<string name="screen_bright_na">Brightness setting unavailable</string>
 		<string name="vibration_hdr">Vibration</string>
 		<string name="button_vibration_hdr">Button Vibration</string>
@@ -377,12 +409,12 @@
 		<string name="sel_lang_btn">Select Language</string>
 		<string name="set_language_btn">Set Language</string>
 		<string name="advanced_hdr">Advanced</string>
-		<string name="copy_log_confirm">Copy Log to SD Card?</string>
-		<string name="copying_log" version="2">Copying Logs to SD Card...</string>
+		<string name="copy_log_confirm">Copy Log to SD card?</string>
+		<string name="copying_log" version="2">Copying Logs to SD card...</string>
 		<string name="copy_log_complete" version="2">Logs Copy Complete</string>
 		<string name="fix_context_btn">Fix Contexts</string>
-		<string name="part_sd_btn">Partition SD Card</string>
-		<string name="part_sd_s_btn">SD Card</string>
+		<string name="part_sd_btn">Partition SD card</string>
+		<string name="part_sd_s_btn">SD card</string>
 		<string name="file_manager_btn">File Manager</string>
 		<string name="language_hdr">Language</string>
 		<string name="terminal_btn">Terminal</string>
@@ -393,7 +425,7 @@
 		<string name="injecting_twrp">Re-Injecting TWRP...</string>
 		<string name="inject_twrp_complete">TWRP Injection Complete</string>
 		<string name="swipe_to_confirm">Swipe to Confirm</string>
-		<string name="part_sd_hdr">Partition SD Card</string>
+		<string name="part_sd_hdr">Partition SD card</string>
 		<string name="invalid_partsd_sel">You must select a removable device</string>
 		<string name="part_sd_lose">You will lose all files on your SD card!</string>
 		<string name="part_sd_undo">This action cannot be undone!</string>
@@ -404,7 +436,7 @@
 		<string name="file_system">File System:</string>
 		<string name="swipe_part_sd">Swipe to Partition</string>
 		<string name="swipe_part_sd_s">Partition</string>
-		<string name="partitioning_sd">Partitioning SD Card...</string>
+		<string name="partitioning_sd">Partitioning SD card...</string>
 		<string name="partitioning_sd2">This will take a few minutes.</string>
 		<string name="part_sd_complete">Partitioning Complete</string>
 		<string name="dumlock_hdr">HTC Dumlock</string>
@@ -552,7 +584,7 @@
 		<string name="decrypt_success_dev">Data successfully decrypted, new block device: '{1}'</string>
 		<string name="decrypt_success_nodev">Data successfully decrypted</string>
 		<string name="done">Done.</string>
-		<string name="start_partition_sd">Partitioning SD Card...</string>
+		<string name="start_partition_sd">Partitioning SD card...</string>
 		<string name="partition_sd_locate">Unable to locate device to partition.</string>
 		<string name="ext_swap_size">EXT + Swap size is larger than sdcard size.</string>
 		<string name="remove_part_table">Removing partition table...</string>
@@ -680,7 +712,7 @@
 		<string name="curr_date">(Current Date)</string>
 		<string name="backup_name_len">Backup name is too long.</string>
 		<string name="backup_name_invalid">Backup name '{1}' contains invalid character: '{1}'</string>
-		<string name="no_real_sdcard">This device does not have a real SD Card! Aborting!</string>
+		<string name="no_real_sdcard">This device does not have a real SD card! Aborting!</string>
 		<string name="cancel_sideload">Cancelling ADB sideload...</string>
 		<string name="change_fs_err">Error changing file system.</string>
 		<string name="theme_ver_err">Custom theme version does not match TWRP version. Using stock theme.</string>
@@ -694,5 +726,96 @@
 		<string name="include_kernel_log">Include Kernel Log</string>
 		<string name="sha2_chk">Use SHA2 for hashing</string>
 		<string name="unable_set_boot_slot">Error changing bootloader boot slot to {1}</string>
+
+		<!-- add some string by NFound -->
+		<string name="rb_edl_btn">EDL(9008)</string>
+		<string name="rb_disemmcwp_btn">Disemmcwp</string>
+		<string name="reset_battery_btn">Reset Battery</string>
+		<string name="reset_battery_hdr">Reset Battery</string>
+		<string name="reset_battery_note1">If you do not have a correct display of</string>
+		<string name="reset_battery_note2">the charge level you should do this.</string>
+		<string name="swipe_to_reset_battery">Swipe to Reset Battery</string>
+		<string name="resetting_battery">Resetting Battery...</string>
+		<string name="reset_battery_complete">Reset Battery Complete</string>
+		<string name="reset_vk_btn">Reset vk</string>
+		<string name="reset_vk_hdr">Reset vk</string>
+		<string name="reset_vk_note1">Resetting the VK music counter.</string>
+		<string name="reset_vk_note2">Swipe to reset.</string>
+		<string name="swipe_to_reset_vk">Swipe to Reset Battery</string>
+		<string name="resetting_vk">Resetting vk...</string>
+		<string name="reset_vk_complete">Reset vk Complete</string>
+		<string name="reset_dm_btn">No dm-verity</string>
+		<string name="reset_dm_hdr">No dm-verity</string>
+		<string name="reset_dm_note1">No dm-verity.</string>
+		<string name="reset_dm_note2">Swipe to No dm-verity.</string>
+		<string name="swipe_to_reset_dm">Swipe to No dm-verity</string>
+		<string name="resetting_dm">No dm-verity...</string>
+		<string name="reset_dm_complete">No dm-verity</string>
+		<string name="reset_aboot_btn">Del inscription</string>
+		<string name="reset_aboot_hdr">Del inscription</string>
+		<string name="reset_aboot_note1">Delete inscription bootloader.</string>
+		<string name="reset_aboot_note2">Swipe to del.</string>
+		<string name="swipe_to_reset_aboot">Swipe to del</string>
+		<string name="resetting_aboot">Delete inscription...</string>
+		<string name="reset_aboot_complete">Delete inscription Complete</string>
+		<string name="reset_torch_btn">torch</string>
+		<string name="reset_torch_hdr">torch</string>
+		<string name="reset_torch_note1">torch.</string>
+		<string name="reset_torch_note2">Swipe torch.</string>
+		<string name="swipe_to_reset_torch">Swipe to torch</string>
+		<string name="resetting_torch">torch...</string>
+		<string name="reset_torch_complete">torch Complete</string>
+		<string name="reset_unroot_btn">unroot</string>
+		<string name="reset_unroot_hdr">unroot</string>
+		<string name="reset_unroot_note1">unroot.</string>
+		<string name="reset_unroot_note2">Swipe unroot.</string>
+		<string name="swipe_to_reset_unroot">Swipe to unroot</string>
+		<string name="resetting_unroot">unroot...</string>
+		<string name="reset_unroot_complete">unroot Complete</string>
+		<string name="root_btn">Root</string>
+		<string name="root_hdr">More > Root</string>
+		<string name="magisk_btn">Magisk</string>
+		<string name="magisk_text">Install Magisk 15.3</string>
+		<string name="magisk_confirm">install?</string>
+		<string name="supersu_btn">SuperSU</string>
+		<string name="supersu_text">install SuperSU 2.82</string>
+		<string name="supersu_confirm">install?</string>
+		<string name="unmagisk_btn">Del Magisk</string>
+		<string name="unmagisk_text">del Magisk</string>
+		<string name="unmagisk_confirm">del?</string>
+		<string name="unsupersu_btn">del SuperSU</string>
+		<string name="unsupersu_text">del SuperSU</string>
+		<string name="unsupersu_confirm">del?</string>
+		<string name="torch_hdr">Torch > OnOff</string>
+		<string name="ontorch_btn">On</string>
+		<string name="offtorch_btn">Off</string>
+		<string name="reset_torch2_hdr">Torch</string>
+		<string name="reset_torch2_note1">off</string>
+		<string name="reset_torch2_note2">off!</string>
+		<string name="swipe_to_reset_torch2">Swipe to off</string>
+		<string name="resetting_torch2">off...</string>
+		<string name="reset_torch2_complete">off</string>
+		<string name="music">Музыка</string>
+		<string name="music_hdr">Музыка</string>
+		<string name="volume">Уведомление</string>
+		<string name="vol_text">Убрать уведомление о превышении</string>
+		<string name="vol_confirm">уровня громкости на стоковых прошивках</string>
+		<string name="aptx_btn">AptX</string>
+		<string name="aptx_text">Установить кодек для улучшения качества</string>
+		<string name="aptx_confirm">звука на Bluetooth-устройствах</string>
+		<string name="syst_btn">Система</string>
+		<string name="syst_hdr">Системные изменения</string>
+		<string name="nb_btn">Экранные кнопки</string>
+		<string name="c2a_btn">Поддержка Cam2API</string>
+		<string name="initd_btn">Поддержка init.d</string>
+		<string name="initd_text">Будет добавлена в boot и build.prop,</string>
+		<string name="initd_confirm">для работы необходимо установить busybox</string>
+		<string name="nb_hdr">Панель навигации</string>
+		<string name="nb_text">Активировать панель навигации</string>
+		<string name="nb_confirm">для стоковых прошивок?</string>
+		<string name="nb2_text">Деактивировать панель навигации</string>
+		<string name="ca_hdr">Поддержка Cam2API</string>
+		<string name="ca_text">Активировать режим Camera2API</string>
+		<string name="ca2_text">Деактивировать режим Camera2API</string>
 	</resources>
 </language>

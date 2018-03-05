@@ -32,7 +32,9 @@ typedef enum
 	rb_system,
 	rb_recovery,
 	rb_poweroff,
-	rb_bootloader,     // May also be fastboot
+	rb_bootloader,
+	rb_edl,     
+	rb_disemmcwp,     
 	rb_download,
 } RebootCommand;
 
@@ -56,6 +58,8 @@ public:
 	static int Wait_For_Child(pid_t pid, int *status, string Child_Name);       // Waits for pid to exit and checks exit status
 	static int Wait_For_Child_Timeout(pid_t pid, int *status, const string& Child_Name, int timeout); // Waits for a pid to exit until the timeout is hit. If timeout is hit, kill the chilld.
 	static bool Path_Exists(string Path);                                       // Returns true if the path exists
+	static void Set_Xposed_Vars();                                              // Set Xposed Variables as needed
+	static int Set_Xposed_Enabled(bool enabled);                               // Enable/disable Xposed Framework
 	static Archive_Type Get_File_Type(string fn);                               // Determines file type, 0 for unknown, 1 for gzip, 2 for OAES encrypted
 	static int Try_Decrypting_File(string fn, string password); // -1 for some error, 0 for failed to decrypt, 1 for decrypted, 3 for decrypted and found gzip format
 	static unsigned long Get_File_Size(const string& Path);                            // Returns the size of a file
@@ -91,7 +95,8 @@ public:
 	static void Fixup_Time_On_Boot(); // Fixes time on devices which need it
 	static std::vector<std::string> Split_String(const std::string& str, const std::string& delimiter, bool removeEmpty = true); // Splits string by delimiter
 	static bool Create_Dir_Recursive(const std::string& path, mode_t mode = 0755, uid_t uid = -1, gid_t gid = -1);  // Create directory and it's parents, if they don't exist. mode, uid and gid are set to all _newly_ created folders. If whole path exists, do nothing.
-	static int Set_Brightness(std::string brightness_value); // Well, you can read, it does what it says, passing return int from TWFunc::Write_File ;)
+	static int Set_Brightness(std::string brightness_value); // Well, you can read, it does what it says, passing return int from TWFunc::write_to_file ;)
+	static int Set_Btn_Brightness(std::string bth_brightness_value); // Well, you can read, it does what it says, passing return int from TWFunc::write_to_file ;)
 	static bool Toggle_MTP(bool enable);                                        // Disables MTP if enable is false and re-enables MTP if enable is true and it was enabled the last time it was toggled off
 	static std::string to_string(unsigned long value); //convert ul to string
 	static void SetPerformanceMode(bool mode); // support recovery.perf.mode

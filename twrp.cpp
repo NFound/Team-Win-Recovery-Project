@@ -271,6 +271,14 @@ int main(int argc, char **argv) {
 	}
 	LOGINFO("Backup of TWRP ramdisk done.\n");
 #endif
+/*
+	Run AOSP Commands here, prior to checking for encryption.
+	This allows for factory reset commands (especially ones issued for remote wiping)
+	to wipe the device without stopping at the decryption prompt.
+	Otherwise, there's an opportunity for an intruder or thief to access the data in TWRP.
+*/
+	if (TWFunc::Path_Exists(SCRIPT_FILE_TMP))
+		OpenRecoveryScript::Run_OpenRecoveryScript();
 
 	TWFunc::Update_Log_File();
 	// Offer to decrypt if the device is encrypted
@@ -300,7 +308,7 @@ int main(int argc, char **argv) {
 		TWFunc::Fixup_Time_On_Boot();
 
 	// Run any outstanding OpenRecoveryScript
-	if (DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0 && (TWFunc::Path_Exists(SCRIPT_FILE_TMP) || TWFunc::Path_Exists(SCRIPT_FILE_CACHE))) {
+	if (DataManager::GetIntValue(TW_IS_ENCRYPTED) == 0 && TWFunc::Path_Exists(SCRIPT_FILE_CACHE)) {
 		OpenRecoveryScript::Run_OpenRecoveryScript();
 	}
 
@@ -353,8 +361,16 @@ int main(int argc, char **argv) {
 		}
 	}
 #endif
+
 	twrpAdbBuFifo *adb_bu_fifo = new twrpAdbBuFifo();
 	adb_bu_fifo->threadAdbBuFifo();
+
+	// Set xposed variables
+	TWFunc::Set_Xposed_Vars();
+	int i, e;
+	DataManager::GetValue(TW_XPOSED, i);
+	DataManager::GetValue(TW_XPOSED_ENABLED, e);
+	LOGINFO("Xposed: installed=%d, enabled=%d.\n", i, e);
 
 	// Launch the main GUI
 	gui_start();
@@ -395,6 +411,10 @@ int main(int argc, char **argv) {
 		TWFunc::tw_reboot(rb_poweroff);
 	else if (Reboot_Arg == "bootloader")
 		TWFunc::tw_reboot(rb_bootloader);
+	else if (Reboot_Arg == "edl")
+		TWFunc::tw_reboot(rb_edl);
+	else if (Reboot_Arg == "disemmcwp")
+		TWFunc::tw_reboot(rb_disemmcwp);
 	else if (Reboot_Arg == "download")
 		TWFunc::tw_reboot(rb_download);
 	else

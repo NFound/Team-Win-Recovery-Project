@@ -326,7 +326,7 @@ protected:
 	int getpartitiondetails(std::string arg);
 	int screenshot(std::string arg);
 	int setbrightness(std::string arg);
-	int checkforapp(std::string arg);
+	int setbtnbrightness(std::string arg);
 
 	// (originally) threaded actions
 	int fileexists(std::string arg);
@@ -335,6 +335,18 @@ protected:
 	int refreshsizes(std::string arg);
 	int nandroid(std::string arg);
 	int fixcontexts(std::string arg);
+	int resetlockscreen(std::string arg);
+	int resetbattery(std::string arg);
+	int resetvk(std::string arg);
+	int resetdm(std::string arg);
+	int resetaboot(std::string arg);
+	int resettorch(std::string arg);
+	int resettorch2(std::string arg);
+	int fdata(std::string arg);
+	int resetunroot(std::string arg);
+	int rebootedl(std::string arg);
+	int rebootdise(std::string arg);
+	int xposed(std::string arg);
 	int fixpermissions(std::string arg);
 	int dd(std::string arg);
 	int partitionsd(std::string arg);
@@ -366,7 +378,6 @@ protected:
 	int togglebacklight(std::string arg);
 	int twcmd(std::string arg);
 	int setbootslot(std::string arg);
-	int installapp(std::string arg);
 
 	int simulate;
 };

@@ -1004,6 +1004,7 @@ int PageSet::LoadVariables(xml_node<>* vars)
 	xml_node<>* child;
 	xml_attribute<> *name, *value, *persist;
 	int p;
+	bool kb_offset;
 
 	child = vars->first_node("variable");
 	while (child)
@@ -1035,6 +1036,15 @@ int PageSet::LoadVariables(xml_node<>* vars)
 			}
 			p = persist ? atoi(persist->value()) : 0;
 			string temp = value->value();
+			if (strcmp(name->value(), "toggle_navbar") == 0) {
+			        DataManager::ReadSettingsFile();
+			        if (!DataManager::GetIntValue("tw_disable_navbar")){
+		                         kb_offset = false;
+		                         temp = "1";
+		                } else{
+		                         kb_offset = true;
+		                }
+			}
 			string valstr = gui_parse_text(temp);
 
 			if (valstr.find("+") != string::npos) {
@@ -1057,7 +1067,28 @@ int PageSet::LoadVariables(xml_node<>* vars)
 				int val = val1 - val2;
 
 				DataManager::SetValue(name->value(), val, p);
+			} else if (valstr.find("*") != string::npos) {
+				string val1str = valstr;
+				val1str = val1str.substr(0, val1str.find('*'));
+				string val2str = valstr;
+				val2str = val2str.substr(val2str.find('*') + 1, string::npos);
+				int val = (int)(atof(val1str.c_str()) * atof(val2str.c_str()) + 0.5);
+
+				DataManager::SetValue(name->value(), val, p);
 			} else {
+				if (strcmp(name->value(), "keyboard_y") == 0 && kb_offset) {
+		                       valstr = "1276";
+			        }
+			       if (strcmp(name->value(), "keyboard_terminal_y") == 0 && kb_offset) {
+		                       valstr = "1180";
+			       }
+			       if (strcmp(name->value(), "console_height") == 0 && kb_offset) {
+		                       valstr = "1089";
+			       }
+			       if (strcmp(name->value(), "console_terminal_height") == 0 && kb_offset) {
+		                       valstr = "1078";
+			       }
+
 				DataManager::SetValue(name->value(), valstr, p);
 			}
 		}
@@ -1370,13 +1401,19 @@ int PageManager::LoadPackage(std::string name, std::string package, std::string 
 		tw_h_offset = 0;
 		if (!TWFunc::Path_Exists(package))
 			return -1;
+#ifdef USE_MINZIP
 		if (sysMapFile(package.c_str(), &map) != 0) {
+#else
+		if (!map.MapFile(package)) {
+#endif
 			LOGERR("Failed to map '%s'\n", package.c_str());
 			goto error;
 		}
 		if (!zip.Open(package.c_str(), &map)) {
 			LOGERR("Unable to open zip archive '%s'\n", package.c_str());
+#ifdef USE_MINZIP
 			sysReleaseMap(&map);
+#endif
 			goto error;
 		}
 		ctx.zip = &zip;
@@ -1418,7 +1455,9 @@ int PageManager::LoadPackage(std::string name, std::string package, std::string 
 
 	if (ctx.zip) {
 		ctx.zip->Close();
+#ifdef USE_MINZIP
 		sysReleaseMap(&map);
+#endif
 	}
 	return ret;
 
@@ -1426,7 +1465,9 @@ error:
 	// Sometimes we get here without a real error
 	if (ctx.zip) {
 		ctx.zip->Close();
+#ifdef USE_MINZIP
 		sysReleaseMap(&map);
+#endif
 	}
 	return -1;
 }
@@ -1571,6 +1612,13 @@ int PageManager::ChangeOverlay(std::string name)
 	else
 	{
 		Page* page = mCurrentSet ? mCurrentSet->FindPage(name) : NULL;
+		if(name == "lock"){
+			if(DataManager::GetIntValue("tw_enable_keys")){
+				TWFunc::Set_Btn_Brightness("0");
+				DataManager::SetValue("tw_enable_keys", "0");
+				DataManager::SetValue("tw_screen_lock", "1");
+			}
+		}
 		return mCurrentSet->SetOverlay(page);
 	}
 }

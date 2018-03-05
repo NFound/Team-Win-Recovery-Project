@@ -215,6 +215,10 @@ static int vk_init(struct ev *e)
             keytype:keycode:centerx:centery:width:height:keytype2:keycode2:centerx2:...
         */
         for (ts = vks, e->vk_count = 1; *ts; ++ts) {
+//+++++++++
+            if (*ts == '\n')
+                *ts = ':';
+//+++++++++
             if (*ts == ':')
                 ++e->vk_count;
         }
@@ -438,6 +442,13 @@ static int vk_modify(struct ev *e, struct input_event *ev)
 
 	// Handle keyboard events, value of 1 indicates key down, 0 indicates key up
 	if (ev->type == EV_KEY) {
+//+++++++++
+		if (ev->code == BTN_TOUCH/*330*/) {
+			if (ev->value)
+				e->mt_p.synced = 0x03;
+			return 1;
+		}
+//+++++++++
 		return 0;
 	}
 
@@ -558,8 +569,10 @@ static int vk_modify(struct ev *e, struct input_event *ev)
             return 1;
 #endif
             if (ev->value < 0) {
-                e->mt_p.x = 0;
-                e->mt_p.y = 0;
+//+++++++++
+                //e->mt_p.x = 0;
+                //e->mt_p.y = 0;
+//+++++++++
                 touchReleaseOnNextSynReport = 2;
                 use_tracking_id_negative_as_touch_release = 1;
 #ifdef _EVENT_LOGGING
